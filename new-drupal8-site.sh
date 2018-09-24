@@ -5,6 +5,7 @@
 newSite=null
 configDir=$(pwd)/$newSite/config
 d8root=web
+config='$config'
 RED='\033[0;31m'
 BLUE='\034[0;31m'
 MAGENTA='\035[0;31m'
@@ -52,6 +53,9 @@ baseSetup() {
     composer require 'drupal/config_filter:^1.2'
     composer require 'drupal/config_split:^1.3'
     composer require 'drupal/devel:1.x-dev'
+    
+    printf "\n// Configuration Split \n" >> web/settings/default/settings.php
+    printf "$config['config_split.config_split.prod']['status'] = TRUE;" >> web/settings/default/settings.php
 
     mkdir config
     cd config
