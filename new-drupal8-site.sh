@@ -74,7 +74,7 @@ ddevSetup() {
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 11011,
+            "port": 9000,
             "pathMappings": {
                 "/var/www/html": "${workspaceRoot}"
             }
