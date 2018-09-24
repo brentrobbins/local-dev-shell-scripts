@@ -52,9 +52,6 @@ baseSetup() {
     composer require 'drupal/config_split:^1.3'
     composer require 'drupal/devel:1.x-dev'
 
-    printf "\n// Configuration Split \n" >> web/settings/default/settings.php
-    printf "$config['config_split.config_split.prod']['status'] = TRUE;" >> web/settings/default/settings.php
-
     mkdir config
     cd config
     git clone https://github.com/brentrobbins/drupal8-base-config.git .
@@ -64,8 +61,30 @@ baseSetup() {
 
 # Initial DDEV setup (local dev enviornment) of the Drupal 8 site
 ddevSetup() {
-    ddev config --docroot=$d8root --projectname=$newSite --projecttype=drupal8
+    ddev config --docroot=$d8root --projectname=$newSite --projecttype=drupal8 --xdebug-enabled=true
+    
+    #mkdir .ddev/php
+    #printf "[PHP]\n xdebug.remote_port=11011" >> .ddev/php/xdebug_remote_port.ini
+
+    mkdir .vscode
+    touch .vscode/launch.json
+    printf '{
+        "version": "0.2.0",
+        "configurations": [{
+            "name": "Listen for XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "pathMappings": {
+                "/var/www/html": "${workspaceRoot}"
+            }
+        }]
+    }' >> .vscode/launch.json
+
     ddev start
+
+    printf "\n// Configuration Split \n" >> web/sites/default/settings.php
+    printf "$config['config_split.config_split.dev']['status'] = TRUE;" >> web/sites/default/settings.php
 }
 
 # Drupal install using the base configuration files
