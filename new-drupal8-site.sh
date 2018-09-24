@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Variables
 newSite=null
 configDir=$(pwd)/$newSite/config
@@ -26,7 +25,6 @@ main() {
             ddevSetup
             siteInstall
     fi
-    
 }
 
 # Install drupal 8 using the composer template
@@ -53,7 +51,7 @@ baseSetup() {
     composer require 'drupal/config_filter:^1.2'
     composer require 'drupal/config_split:^1.3'
     composer require 'drupal/devel:1.x-dev'
-    
+
     printf "\n// Configuration Split \n" >> web/settings/default/settings.php
     printf "$config['config_split.config_split.prod']['status'] = TRUE;" >> web/settings/default/settings.php
 
